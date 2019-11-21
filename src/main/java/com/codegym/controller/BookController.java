@@ -26,7 +26,7 @@ public class BookController {
         return categoryService.findAll();
     }
     @GetMapping("/book")
-    public ModelAndView listEmplyee(@RequestParam("s") Optional<String> s,@PageableDefault(size = 10) Pageable pageable){
+    public ModelAndView listEmplyee(@RequestParam("s") Optional<String> s, @PageableDefault(size = 10) Pageable pageable){
         Page<Book> books;;
         if (s.isPresent()){
             books=bookService.findAllByNameContaining(s.get(),pageable);
@@ -35,6 +35,11 @@ public class BookController {
         }
         ModelAndView modelAndView = new ModelAndView("/book/list");
         modelAndView.addObject("books", books);
+//        if (lang.isPresent()) {
+//            modelAndView.addObject("lang", lang.get());
+//        } else {
+//            modelAndView.addObject("lang", "");
+//        }
         return modelAndView;
     }
     @GetMapping("/create-book")

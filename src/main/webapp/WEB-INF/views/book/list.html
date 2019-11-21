@@ -5,18 +5,27 @@
     <title>Title</title>
 </head>
 <body>
-<p><a href="/categories"><button type="button">Categories List</button></a></p>
-<a href="/create-book">Create new book</a>
-<h1>Book</h1>
-<form>
-    Search by firstname:
-    <input name="s" type="text"/>
-    <input type="submit" value="Search"/>
+<p th:text="${param.lang}"></p>
+<form onchange="this.submit()">
+    <select name="lang">
+        <option value="">....</option>
+        <option value="vi" >Viet Nam</option>
+        <option value="en" >English</option>
+    </select>
 </form>
-<p><a th:href="@{/sortByPriceAsc}"><button type="button">Sort By Price Asc</button></a></p>
-<p><a th:href="@{/sortByPriceDesc}"><button type="button">Sort By Price Desc</button></a></p>
+<br/>
+<p><a href="/categories"><button type="button" th:text="#{Categorieslist}"></button></a></p>
+<a href="/create-book" th:text="#{Createnewbook}"></a>
+<h1 th:text="#{Book}"></h1>
+<form>
+    <a th:text="#{Searchbyfirstname}"></a>
+    <input name="s" type="text"/>
+    <input type="submit" value="Search" />
+</form>
+<p><a th:href="@{/sortByPriceAsc}" ><button type="button" th:text="#{SortByPriceAsc}"></button></a></p>
+<p><a th:href="@{/sortByPriceDesc}"><button type="button" th:text="#{SortByPriceDesc}"></button></a></p>
 <form action="/searchByCategory" onchange="this.submit()">
-    <a>Search By Category:</a>
+    <a th:text="#{SearchByCategory}"></a>
     <select name="search">
         <option th:each="d:${categories}" th:text="${d.name}" th:value="${d.getId()}"></option>
     </select>
@@ -24,13 +33,13 @@
 <br/>
 <table border="1">
     <tr>
-        <th>name</th>
-        <th>dateOfPurchase</th>
-        <th>Author</th>
-        <th>Price</th>
-        <th>Categories</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th th:text="#{Name}"></th>
+        <th th:text="#{DateOfPurchase}"></th>
+        <th th:text="#{Author}"></th>
+        <th th:text="#{Price}"></th>
+        <th th:text="#{Categories}"></th>
+        <th th:text="#{Edit}"></th>
+        <th th:text="#{Delete}"></th>
     </tr>
     <th:block th:each="book : ${books}">
         <tr>
@@ -40,14 +49,14 @@
             <td th:text="${book.price}">
             <td th:text="${book.getCategory().getName()}"></td>
         </tr>
-        <td><a th:href="@{/edit-book/__${book.id}__ }">Edit</a></td>
-        <td><a th:href="@{/delete-book/__${book.id}__ }">Delete</a></td>
+        <td><a th:href="@{/edit-book/__${book.id}__ }" th:text="#{Edit}" ></a></td>
+        <td><a th:href="@{/delete-book/__${book.id}__ }" th:text="#{Delete}"></a></td>
         </tr>
     </th:block>
     <div>
-        <a th:href="@{'/book'(page=${books.number - 1})}" th:if="${books.hasPrevious()}">Previous</a>
+        <a th:href="@{'/book'(page=${books.number - 1})}" th:if="${books.hasPrevious()}" th:text="#{Previous}"></a>
         <span th:text="${books.number + 1}"></span>/<span th:text="${books.totalPages}"></span>
-        <a th:href="@{'/book'(page=${books.number + 1})}" th:if="${books.hasNext()}">Next</a>
+        <a th:href="@{'/book'(page=${books.number + 1})}" th:if="${books.hasNext()}" th:text="#{Next}"></a>
     </div>
 </table>
 </body>
